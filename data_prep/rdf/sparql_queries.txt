@@ -1,0 +1,191 @@
+
+Anfrage coins:
+PREFIX nm: <http://nomisma.org/id/>
+PREFIX nmo: <http://nomisma.org/ontology#>
+PREFIX void: <http://rdfs.org/ns/void#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX bio: <http://purl.org/vocab/bio/0.1/>
+PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
+PREFIX dcmitype: <http://purl.org/dc/dcmitype/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX org: <http://www.w3.org/ns/org#>
+PREFIX osgeo: <http://data.ordnancesurvey.co.uk/ontology/geometry/>
+PREFIX rdac: <http://www.rdaregistry.info/Elements/c/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX spatial: <http://jena.apache.org/spatial#>
+
+select *  where {
+ ?coin nmo:hasObjectType <http://nomisma.org/id/coin>.
+    OPTIONAL {
+  ?coin rdf:type ?rdftype
+  }
+   OPTIONAL {
+    ?coin dcterms:identifier ?dcidentif. }
+   OPTIONAL {
+  ?coin nmo:hasObverse ?obverse.
+  }
+    OPTIONAL {
+  ?coin nmo:hasReverse ?reverse.
+  }
+  OPTIONAL{
+    ?coin dcterms:title ?dctitle. }
+  OPTIONAL {
+    ?coin nmo:hasMaxDiameter ?maxdiam. }
+  OPTIONAL {
+    ?coin nmo:hasDate ?datelong. }
+ OPTIONAL {
+    ?coin nmo:hasMinDiameter ?mindiam. }
+ OPTIONAL {
+    ?coin nmo:hasWeight ?weight. }
+  OPTIONAL {
+    ?coin dcterms:publisher ?dcpublish. }
+ OPTIONAL {
+    ?coin dcterms:title ?dctitle. }
+  OPTIONAL {
+    ?coin nmo:hasMaterial ?material. }
+  OPTIONAL {
+    ?coin nmo:hasEndDate ?enddate. }
+  OPTIONAL {
+    ?coin nmo:hasStartDate ?startdate. }
+  OPTIONAL {
+    ?coin nmo:hasDenomination ?denom. }
+  OPTIONAL {
+    ?coin nmo:hasMint ?mint. }
+  OPTIONAL {
+    ?coin nmo:hasCollection ?collection. }
+   OPTIONAL {
+    ?coin nmo:hasAxis ?axis. }
+    OPTIONAL {
+      ?coin nmo:hasWeightStandard ?weightstand_de.
+    FILTER (LANG(?weightstand_de) = "de")
+  }
+  OPTIONAL {
+  ?coin nmo:hasWeightStandard ?weightstand_engl.
+    FILTER (LANG(?weightstand_engl) = "en")
+  }
+    OPTIONAL {
+  ?coin nmo:hasFindspot ?findsport.
+  }
+    OPTIONAL {
+  ?coin nmo:hasAuthority ?authority.
+  }
+  OPTIONAL {
+    ?coin nmo:hasPeculiarities ?peculiarities_de.
+  	FILTER (LANG(?peculiarities_de) = "de")
+  }
+  OPTIONAL {
+    ?coin nmo:hasPeculiarities ?peculiarities_engl.
+    FILTER (LANG(?peculiarities_engl) = "en")
+  }
+ 
+
+}
+
+Anfrage descriptions:
+PREFIX nm: <http://nomisma.org/id/> 
+PREFIX nmo: <http://nomisma.org/ontology#> 
+PREFIX void: <http://rdfs.org/ns/void#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX bio: <http://purl.org/vocab/bio/0.1/> 
+PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/> 
+PREFIX dcmitype: <http://purl.org/dc/dcmitype/> 
+PREFIX dcterms: <http://purl.org/dc/terms/> 
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> 
+PREFIX org: <http://www.w3.org/ns/org#> 
+PREFIX osgeo: <http://data.ordnancesurvey.co.uk/ontology/geometry/> 
+PREFIX rdac: <http://www.rdaregistry.info/Elements/c/> 
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX spatial: <http://jena.apache.org/spatial#> 
+PREFIX xml: <http://www.w3.org/XML/1998/namespace/>
+
+
+
+select distinct ?coin ?obv_description_en ?obv_description_de ?rev_description_en ?rev_description_de 
+?die_obv_id ?die_rev_id ?die_obv_description_en ?die_obv_description_de ?die_rev_description_en ?die_rev_description_de
+where {
+  ?coin nmo:hasObjectType <http://nomisma.org/id/coin>.
+  # DESCRIPTIONS OBVERSE
+  OPTIONAL{
+    ?coin nmo:hasTypeSeriesItem ?typeSeriesItem.
+    ?typeSeriesItem nmo:hasObverse ?obv.
+    ?obv dcterms:description ?obv_description_en.
+    FILTER (LANG(?obv_description_en) = "en")}
+  OPTIONAL{
+    ?coin nmo:hasTypeSeriesItem ?typeSeriesItem.
+    ?typeSeriesItem nmo:hasObverse ?obv.
+    ?obv dcterms:description ?obv_description_de.
+    FILTER (LANG(?obv_description_de) = "de")}
+  
+  # DESCRIPTIONS REVERSE
+  OPTIONAL{
+    ?coin nmo:hasTypeSeriesItem ?typeSeriesItem.
+    ?typeSeriesItem nmo:hasReverse ?rev.
+    ?rev dcterms:description ?rev_description_en.
+    FILTER (LANG(?rev_description_en) = "en")}
+  OPTIONAL{
+    ?coin nmo:hasTypeSeriesItem ?typeSeriesItem.
+    ?typeSeriesItem nmo:hasReverse ?rev.
+    ?rev dcterms:description ?rev_description_de.
+    FILTER (LANG(?rev_description_de) = "de")}
+  
+  #ID DIE OBVERSE
+  OPTIONAL{
+    ?coin nmo:hasObverse ?c_obv.
+    ?c_obv nmo:hasDie ?die_obv.
+    ?die_obv dcterms:identifier ?die_obv_id.
+  }
+  
+    #ID DIE REVERSE
+  OPTIONAL{
+    ?coin nmo:hasObverse ?c_rev.
+    ?c_rev nmo:hasDie ?die_rev.
+    ?die_rev dcterms:identifier ?die_rev_id.
+  }
+  
+  # DESCRIPTIONS DIE OBVERSE
+  OPTIONAL{
+    ?coin nmo:hasObverse ?c_obv2.
+    ?c_obv2 nmo:hasDie ?die_obv2.
+    ?die_obv2 dcterms:description ?die_obv_description_en.
+    FILTER (LANG(?die_obv_description_en) = "en")}
+  OPTIONAL{
+    ?coin nmo:hasObverse ?c_obv2.
+    ?c_obv2 nmo:hasDie ?die_obv2.
+    ?die_obv2 dcterms:description ?die_obv_description_de.
+    FILTER (LANG(?die_obv_description_de) = "de")}
+  
+# DESCRIPTIONS DIE REVERSE
+  OPTIONAL{
+    ?coin nmo:hasReverse ?c_rev2.
+    ?c_rev2 nmo:hasDie ?die_rev2.
+    ?die_rev2 dcterms:description ?die_rev_description_en.
+    FILTER (LANG(?die_rev_description_en) = "en")}
+  OPTIONAL{
+    ?coin nmo:hasReverse ?c_rev2.
+    ?c_rev2 nmo:hasDie ?die_rev2.
+    ?die_rev2 dcterms:description ?die_rev_description_de.
+    FILTER (LANG(?die_rev_description_de) = "de")}
+}
+
+****************
+  OPTIONAL{
+  ?coin nmo:hasTypeSeriesItem ?typeSeriesItem.
+    ?TypeSeriesItem rdfs:label ?typeSeriesItem_label.}
+*********
+# PORTRAIT VERSUCH
+ # OPTIONAL{
+   # ?coin nmo:hasObverse ?obvv.
+    #?obvv nmo:hasPortrait ?obv_portrait.
+  #}
+   # OPTIONAL{
+    #?coin nmo:hasObverse ?revv.
+    #?revv nmo:hasPortrait ?rev_portrait.
+  }
+ 
