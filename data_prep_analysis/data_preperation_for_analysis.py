@@ -15,12 +15,14 @@ filter_vars = ["coin",  "maxdiam", "mindiam", "weight", "material", "enddate", "
 data = data[filter_vars]
 
 
+
 data["mint"] = [x.replace("http://nomisma.org/id/", "") for x in data["mint"]]
 data["coin"] = [x.split("#coins?id=")[1] for x in data["coin"]]
 data["material"] = [x.replace("http://nomisma.org/id/", "") for x in data["material"]]
 data["denom"] = [x.replace("http://nomisma.org/id/", "") for x in data["denom"]]
 data["findspot"] = [str(x).replace("file:///C:/Users/karsten/Documents/uni/ProgrammeWorkspace/D2RServer/d2rq-0.8.1_CNT/dump_2021_03_16.rdf#", "") for x in data["findsport"]]
 categorial_vars = ["material", "denom", "mint", "collection", "weightstand_engl", "findsport", "authority", "peculiarities_engl" ]
+
 for var in categorial_vars:
     data[var] = data[var].replace("  ", np.nan)
 
@@ -51,11 +53,21 @@ del data["material"]
 for var in categorial_vars:
     data[var] = data[var].astype('category')
     data[f"{var}_cat"] = data[var].cat.codes
-
+#delete collection, mint and denom. Lot of missing values hard to inteprete.
+del data["collection"]
+del data["mint"]
+del data["denom"]
+#fix , . problem for float values
+for col in data.columns:
+    data[col] = [str(x).replace(",",".") for x in data[col]]
+    try:
+        data[col] = data[col].astype(float)
+    except:
+        pass
 # create dataset for algorithms:
 dataset = data.copy()
-del dataset["collection"]
-del dataset["mint"]
-del dataset["denom"]
+
+
+
 
 dataset.to_csv("data\\analysis_dataset.csv", sep=";")
