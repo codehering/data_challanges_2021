@@ -7,13 +7,16 @@ Created on Thu May 20 11:23:45 2021
 
 import pandas as pd
 import numpy as np
-data = pd.read_csv("data\\queryResults_semikolon.csv", sep=";")
+#data = pd.read_csv("data\\queryResults_semikolon.csv", sep=";")
+data = pd.read_csv("C:\\Users\\Leni\\Documents\\UNI\\Data Challenges\\data\\queryResults_semikolon.csv", sep=";")
 
 #filter for interesting variables
 filter_vars = ["coin",  "maxdiam", "mindiam", "weight", "material", "enddate", "startdate", "denom", "mint", "collection", "weightstand_engl", "findsport", "authority", "peculiarities_engl", "axis"]
 
 data = data[filter_vars]
 
+#specify if dummy variables to be created: True = yes, False = no
+create_dummy = False
 
 
 data["mint"] = [x.replace("http://nomisma.org/id/", "") for x in data["mint"]]
@@ -39,24 +42,25 @@ del data["weightstand_engl"]
 categorial_vars.remove("weightstand_engl")
 
 #check number of different observations
-
 for var in categorial_vars:
     print(f"{var} : {len(data[var].unique().tolist())}")
 
-#only for material its possible to create dummy variables:
-print(data["material"].value_counts())
-material_dummys = pd.get_dummies(data["material"], prefix="material")
-data = data.join(material_dummys)
-categorial_vars.remove("material")
-del data["material"]
-# cat encoding for denom, mint and collection
+#only for material its possible to create dummy variables, determine above
+if create_dummy is True:
+    print(data["material"].value_counts())
+    material_dummys = pd.get_dummies(data["material"], prefix="material")
+    data = data.join(material_dummys)
+    categorial_vars.remove("material")
+    del data["material"]
+# cat encoding for categorical variables - denom, mint and collection [,material]
 for var in categorial_vars:
     data[var] = data[var].astype('category')
     data[f"{var}_cat"] = data[var].cat.codes
+    del data[var]
 #delete collection, mint and denom. Lot of missing values hard to inteprete.
-del data["collection"]
-del data["mint"]
-del data["denom"]
+#del data["collection"]
+#del data["mint"]
+#del data["denom"]
 #fix , . problem for float values
 for col in data.columns:
     data[col] = [str(x).replace(",",".") for x in data[col]]
@@ -70,4 +74,8 @@ dataset = data.copy()
 
 
 
-dataset.to_csv("data\\analysis_dataset.csv", sep=";")
+#dataset.to_csv("data\\analysis_dataset.csv", sep=";")
+if create_dummy is True:
+    dataset.to_csv("C:\\Users\\Leni\\Documents\\UNI\\Data Challenges\\data\\analysis_dataset_dummy.csv", sep=";")
+else:
+    dataset.to_csv("C:\\Users\\Leni\\Documents\\UNI\\Data Challenges\\data\\analysis_dataset.csv", sep=";")
