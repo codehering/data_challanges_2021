@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Apr 23 12:47:07 2021
-
+This script was developed to access directly the RDF data with python.
+But we have found that it makes more sense to access the data directly via sparql. For this reason this script is no longer relevant
 @author: freddy, annalena
 """
 
