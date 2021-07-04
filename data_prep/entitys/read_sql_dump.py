@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 Created on Thu Jun  3 15:04:18 2021
-
-@author: fredi
+This script filters all verbs from the dataset and creates for every entity a dummy variable. We used this entity dummy dataset for our experiments.
+@author: freddy, annalena
 """
 
 import pandas as pd
