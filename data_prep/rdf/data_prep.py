@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 Created on Mon Apr 26 21:45:29 2021
+The idea of this script was to directly extract the data from RDF format via python.
+But we have found that it makes more sense to access the data directly via sparql. For this reason this script is no longer relevant
 
 @author: freddy, annalena
 """
