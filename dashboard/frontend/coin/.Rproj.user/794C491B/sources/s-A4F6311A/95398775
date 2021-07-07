@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1625302944252.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "95398775",
+    "lastKnownWriteTime" : 1625303153,
+    "last_content_update" : 1625303153841,
+    "path" : "C:/Users/fredi/Desktop/Uni/Data Challanges/CN/shiny/coin/data_loader.R",
+    "project_path" : "data_loader.R",
+    "properties" : {
+        "cursorPosition" : "71,2",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 16,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

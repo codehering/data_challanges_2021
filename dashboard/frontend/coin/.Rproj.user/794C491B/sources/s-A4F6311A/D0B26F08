@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1624525758489.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "D0B26F08",
+    "lastKnownWriteTime" : 1625671068,
+    "last_content_update" : 1625671068067,
+    "path" : "C:/Users/fredi/Desktop/Uni/Data Challanges/CN/shiny/coin/etl.R",
+    "project_path" : "etl.R",
+    "properties" : {
+        "cursorPosition" : "7,21",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

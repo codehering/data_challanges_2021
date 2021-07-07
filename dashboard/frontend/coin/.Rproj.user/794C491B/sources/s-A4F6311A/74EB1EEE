@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1624785855245.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3561722205",
+    "id" : "74EB1EEE",
+    "lastKnownWriteTime" : 1625683733,
+    "last_content_update" : 1625683733213,
+    "path" : "C:/Users/fredi/Desktop/Uni/Data Challanges/CN/shiny/rf_classifier.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "141,0",
+        "scrollLine" : "114",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
