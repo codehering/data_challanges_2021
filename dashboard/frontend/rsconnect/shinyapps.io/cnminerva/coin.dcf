@@ -5,6 +5,6 @@ account: cnminerva
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 4323024
-bundleId: 4785453
+bundleId: 4796848
 url: https://cnminerva.shinyapps.io/coin/
-when: 1625395628.9547
+when: 1625684912.71298
