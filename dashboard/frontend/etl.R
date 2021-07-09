@@ -4,21 +4,29 @@ library(dplyr)
 data <- readRDS("cnn/cnn_full.rds")
 geo <- read.csv("cnn/mint_geo.csv")
 geo <- geo[c("mint", "lat", "lon")]
+abs_path <- "C:/Users/fredi/Desktop/Uni/Data Challanges/CN/"
 data$mint <- str_trim(data$mint)
 data <- merge(data, geo, all.x=T, by="mint")
 
-data_400bc <- read.csv2(paste0("timeperiod/","data_400bc_labels.csv"), dec = ".")
-data_200bc <- read.csv2(paste0("timeperiod/","data_200bc_labels.csv"), dec = ".")
-data_0bc <- read.csv2(paste0("timeperiod/","data_0bc_labels.csv"), dec = ".")
-data_0ad <- read.csv2(paste0("timeperiod/","data_0ad_labels.csv"), dec = ".")
-data_200ad <- read.csv2(paste0("timeperiod/","data_200ad_labels.csv"), dec = ".")
+#data_400bc <- read.csv2(paste0(abs_path,"timeperiod/new/","data_400bc_labels.csv"), dec = ".")
+#data_200bc <- read.csv2(paste0(abs_path,"timeperiod/new/","data_200bc_labels.csv"), dec = ".")
+#data_0bc <- read.csv2(paste0(abs_path,"timeperiod/new/","data_0bc_labels.csv"), dec = ".")
+#data_0ad <- read.csv2(paste0(abs_path,"timeperiod/new/","data_0ad_labels.csv"), dec = ".")
+#data_200ad <- read.csv2(paste0(abs_path,"timeperiod/new/","data_200ad_labels.csv"), dec = ".")
+
+data_400bc <- read.csv(paste0(abs_path,"timeperiod/new/","data_400bc_labels.csv"))
+data_200bc <- read.csv(paste0(abs_path,"timeperiod/new/","data_200bc_labels.csv"))
+data_0bc <- read.csv(paste0(abs_path,"timeperiod/new/","data_0bc_labels.csv"))
+data_0ad <- read.csv(paste0(abs_path,"timeperiod/new/","data_0ad_labels.csv"))
+data_200ad <- read.csv(paste0(abs_path,"timeperiod/new/","data_200ad_labels.csv"))
+
 
 data <- subset(data, select=-c(X.1,Unnamed..0, findsport, X))
-data_400bc <- subset(data_400bc, select=-c(X))
-data_200bc <- subset(data_200bc, select=-c(X))
-data_0bc <- subset(data_0bc, select=-c(X))
-data_0ad <- subset(data_0ad, select=-c(X))
-data_200ad <- subset(data_200ad, select=-c(X))
+#data_400bc <- subset(data_400bc, select=-c(Unnamed..0,Unnamed..0.1))
+#data_200bc <- subset(data_200bc, select=-c(Unnamed..0))
+#data_0bc <- subset(data_0bc, select=-c(Unnamed..0))
+#data_0ad <- subset(data_0ad, select=-c(Unnamed..0))
+#data_200ad <- subset(data_200ad, select=-c(Unnamed..0))
 
 data_full_400bc <- merge( data_400bc, data, by="coin", all.x=T)
 data_full_200bc <- merge( data_200bc, data, by="coin", all.x=T)
@@ -41,15 +49,15 @@ entitys <- read.csv2("cnn/design_data2.csv", dec= ".", encoding = "UTF-8")
 entitys <- entitys[entitys$Label_Entity != "VERBS",]
 
 entity_400bc <- entitys[entitys$id_coin %in% unique(data_400bc$coin),]
-entity_400bc <- merge(entity_400bc, data_full_400bc[c("coin", "x", "y")], all.x=T, by.x="id_coin", by.y="coin")
+entity_400bc <- merge(entity_400bc, data_full_400bc[c("coin", "x", "y", "kmeans_label", "dbscan_label", "hierarchy_label")], all.x=T, by.x="id_coin", by.y="coin")
 entity_200bc <- entitys[entitys$id_coin %in% unique(data_200bc$coin),]
-entity_200bc <- merge(entity_200bc, data_full_200bc[c("coin", "x", "y")], all.x=T, by.x="id_coin", by.y="coin")
+entity_200bc <- merge(entity_200bc, data_full_200bc[c("coin", "x", "y", "kmeans_label", "dbscan_label", "hierarchy_label")], all.x=T, by.x="id_coin", by.y="coin")
 entity_0bc <- entitys[entitys$id_coin %in% unique(data_0bc$coin),]
-entity_0bc <- merge(entity_0bc, data_full_0bc[c("coin", "x", "y")], all.x=T, by.x="id_coin", by.y="coin")
+entity_0bc <- merge(entity_0bc, data_full_0bc[c("coin", "x", "y", "kmeans_label", "dbscan_label", "hierarchy_label")], all.x=T, by.x="id_coin", by.y="coin")
 entity_0ad <- entitys[entitys$id_coin %in% unique(data_0ad$coin),]
-entity_0ad <- merge(entity_0ad, data_full_0ad[c("coin", "x", "y")], all.x=T, by.x="id_coin", by.y="coin")
+entity_0ad <- merge(entity_0ad, data_full_0ad[c("coin", "x", "y", "kmeans_label", "dbscan_label", "hierarchy_label")], all.x=T, by.x="id_coin", by.y="coin")
 entity_200ad <- entitys[entitys$id_coin %in% unique(data_200ad$coin),]
-entity_200ad <- merge(entity_200ad, data_full_200ad[c("coin", "x", "y")], all.x=T, by.x="id_coin", by.y="coin")
+entity_200ad <- merge(entity_200ad, data_full_200ad[c("coin", "x", "y", "kmeans_label", "dbscan_label", "hierarchy_label")], all.x=T, by.x="id_coin", by.y="coin")
 
 saveRDS(entity_400bc, file = "cnn/entity_400bc.rds")
 saveRDS(entity_200bc, file = "cnn/entity_200bc.rds")
@@ -87,20 +95,3 @@ saveRDS(entity_200bc_detail, file = "cnn/entity_200bc_detail.rds")
 saveRDS(entity_0bc_detail, file = "cnn/entity_0bc_detail.rds")
 saveRDS(entity_0ad_detail, file = "cnn/entity_0ad_detail.rds")
 saveRDS(entity_200ad_detail, file = "cnn/entity_200ad_detail.rds")
-
-test <- entity_200ad_detail %>% group_by(Entity, d_enddate) %>% summarise(n())
-
-
-library(httr)
-library(jsonlite)
-mints <- unique(data$mint)
-get_geo <- function(mint){
-  r <- GET(paste0("http://nomisma.org/apis/getMints?id=",mint))
-  tryCatch(parsed <- jsonlite::fromJSON(content(r, "text") , simplifyVector = FALSE), error = function(e) print(sys.calls()))
-  
-  test <- parsed$features[[1]]
-  return(test$geometry)
-}
-
-
-t <- lapply(mints,get_geo)

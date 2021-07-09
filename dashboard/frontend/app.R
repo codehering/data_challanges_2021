@@ -82,7 +82,6 @@ server <- function(input, output, session) {
                                                numericInput("startdate", "Specify startdate", 0),
                                                numericInput("enddate_finder", "Specify enddate", 0),
                                                selectInput("mint", label="Specify mint", choices=c("")),
-                                               selectInput("denom", label="Specify denom", choices=c("")),
                                                selectInput("material", label="Specify material", choices=c()),
                                                actionButton("calculate", label="Calculate", width=100)
                         ))),
@@ -595,28 +594,24 @@ server <- function(input, output, session) {
         enddate <- input$enddate_finder
         material <- input$material
         mint <- input$mint
-        denom <- input$denom
         data <- get_cluster_dataset_finder()
         entity <- get_cluster_entity_detail_finder()
-        data2 <- data
-        data <- data[c("weight", "startdate", "enddate", "mint", "denom", "material")]
-        new_data <- data.frame(weight, startdate, enddate, mint, denom, material)
-        names(new_data) <- c("weight", "startdate", "enddate", "mint", "denom", "material")
-        data <- rbind(data, new_data)
-        data$mint <- as.double(as.factor(data$mint))
-        data$denom <- as.double(as.factor(data$denom))
-        data$material <- as.double(as.factor(data$material))
-        #browser()
+        geo <- data[data$mint==mint,]
+        lat <- as.numeric(unique(geo$lat))
+        lon <- as.numeric(unique(geo$lon))
+        material <- ifelse(material=="av", 6, ifelse(material=="ar", 5, ifelse(material=="cu", 4, ifelse(material=="ae", 3, ifelse(material=="el", 2, ifelse(material=="pb", 1, 0))))))
+        new_data <- data.frame(weight, startdate, enddate, lon, lat , material)
+        colnames(new_data) <- c("weight", "startdate", "enddate", "lon", "lat", "material")
         model <- get_models()
-        x_new <- predict(model$x, tail(data,1))
-        y_new <- predict(model$y, tail(data,1))
+        x_new <- predict(model$x, new_data)
+        y_new <- predict(model$y, new_data)
         print(x_new)
         print(y_new)
-        data2$dist <- ((data2$x-x_new)^2+(data2$y-y_new)^2)
-        entity$dist <- ((entity$x-x_new)^2+(entity$y-y_new)^2)
-        closest_data <- data2[data2$dist<=min(data2$dist)*1.1,]
+        data$dist <- sqrt((data$x-x_new)^2+(data$y-y_new)^2)
+        entity$dist <- sqrt(((entity$x-x_new)^2+(entity$y-y_new)^2))
+        closest_data <- data[data$dist<=min(data$dist)*1.5,]
         closest_entity <- entity[entity$dist<=min(entity$dist)*1.1,]
-        closest_data <- closest_data[c("x", "y", "coin", "maxdiam", "mindiam", "weight", "startdate", "enddate", "material", "mint", "denom", "dist")]
+        closest_data <- closest_data[c("x", "y","dbscan_label", "coin", "maxdiam", "mindiam", "weight", "startdate", "enddate", "material", "mint", "denom", "dist")]
         closest_entity <- closest_entity[c("x", "y","id_coin", "design_de", "side" ,"Entity", "dist")]
         table$data <- closest_data
         table$entity <- closest_entity
