@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1625302430202.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "A36F1A9E",
+    "lastKnownWriteTime" : 1625302450,
+    "last_content_update" : 1625302450137,
+    "path" : "C:/Users/fredi/Desktop/Uni/Data Challanges/CN/shiny/coin/credentials.R",
+    "project_path" : "credentials.R",
+    "properties" : {
+        "cursorPosition" : "5,1",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 13,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
