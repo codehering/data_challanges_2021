@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue Jul  6 19:40:03 2021
-
-@author: fredi
+This file contains the umap dimension reduction and data prepartion steps. Input from SPARQL query. Output: seperated csv for each timeperiod.
+@author: freddy, annalena
 """
 
 import pandas as pd
@@ -17,6 +17,8 @@ from datetime import datetime
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
+
+
 def prepare_data(data):
     data["weight"] = [float(str(x).replace(",",".")) for x in data["weight"]]
     data["mint"] = [x.replace("http://nomisma.org/id/", "") for x in data["mint"]]
@@ -49,17 +51,18 @@ def prepare_data(data):
         pass
         
     return data
+
+# load data from query
 data = pd.read_csv("C:\\Users\\fredi\\Desktop\\Uni\\Data Challanges\\CN\\data\\queryResults_semikolon.csv", sep=";")
+# do data prepartion
 prepared_data = prepare_data(data)
+# select specific variables
 preselection = ["coin", "weight", "startdate", "enddate", "denom", "mint", "material"]
 selected_data = prepared_data[preselection]
 
-# get geo cordinates
+# get geo cordinates for each mint
 selected_data["mint"] = [x.replace(" ", "") for x in selected_data["mint"]]
 mints = selected_data["mint"].unique().tolist()
-
-
-
 mint_list = list()
 for mint in mints:
     r = requests.get(f"http://nomisma.org/apis/getMints?id={mint}")
@@ -71,11 +74,16 @@ for mint in mints:
         mint_list.append({"mint": mint, "lon": data_mint[0], "lat": data_mint[1]})
     except:
         print(mint)
+        
 # no geocoords for:
 #eleutherion
 #olbia_city
 mint_geo = pd.DataFrame(mint_list)
+
+# merge geo coordinates with selected data
 selected_data = pd.merge(selected_data, mint_geo, how="left", on="mint")
+
+
 #weighting of the material variables:
 #bronze: ae
 #silber: ar
@@ -92,7 +100,7 @@ selected_data = selected_data[["coin", "weight", "startdate", "enddate", "lon", 
 selected_data = selected_data.dropna()
 
 
-#split up the datasets:
+#split up the datasets into differnt time periods
 data_dict = dict()
 data_dict["data_400bc"] = selected_data[selected_data["enddate"] <= -400]
 data_dict["data_200bc"] = selected_data[(selected_data["enddate"]>-400) & (selected_data["enddate"]<=-200)]
@@ -107,8 +115,9 @@ for key in data_dict.keys():
     coin_dict[key] = data_dict[key]["coin"].to_list()
     del data_dict[key]["coin"]
 
-# now do umap:
+# umap dimension transformation
 
+# cross validation calculates the average dimension from UMAP transformation (stochastic process)
 def cross_validation(d, k=40):
     seeds = random.sample(range(0, 100000), k)
     embedding_x = 0
@@ -124,6 +133,7 @@ def cross_validation(d, k=40):
     return embedding_x, embedding_y
 
 umap_results = dict()
+# run umap
 for key in data_dict.keys():
     print(key)
     tmp_data = StandardScaler().fit_transform(data_dict[key])
@@ -134,6 +144,7 @@ for key in data_dict.keys():
     plt.show()
     umap_results[key] = pd.DataFrame({"x": x, "y": y})
 
+# save output
 for key in umap_results.keys():
     umap_results[key]["coin"] = coin_dict[key]
 for key in umap_results.keys():
