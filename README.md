@@ -1,10 +1,10 @@
-# Data Challanges - Numismatic 2021 Repository
+# Data Challenges - Numismatic 2021 Repository
 Dieses Repository beinhaltet alle Skripte und Experimente, die im Rahmen der Vorlesung Data Challenges erstellt wurden. Im Folgenden wird dabei kurz auf die einzelnen Verzeichnisse eingegangen.
 Der Quellcode ist unter https://github.com/codehering/data_challanges_2021 frei verfügbar. 
 ## Technische Umsetzung
 Für die technische Umsetzung des Projektes wurden die Programmiersprache Python und die statistische Skriptsprache R verwendet. Dabei wurde vor allem im ersten Schritt für die jeweiligen Experimente und explorativen Analysen Python mit der Erweiterung Jupyter Notebook verwendet. Für das interaktive Dashboard wurde wiederum das sehr einfach gehaltene High-level Framework Shiny verwendet. 
 ## Daten
-Für den Zugriff der CN Daten muss der Link aus download_link_for_CN_data.txt (nicht auf github) geöffnet und die csv. Daten heruntergeladen werden. Zur Ausführung der Skripte muss entsprechend der Pfad angepasst werden. 
+Für den Zugriff auf die CN Daten muss der Link aus download_link_for_CN_data.txt (nicht auf github) geöffnet und die csv. Daten heruntergeladen werden. Zur Ausführung der Skripte muss entsprechend der Pfad angepasst werden. 
 
 ## Verzeichnisstruktur:
 
