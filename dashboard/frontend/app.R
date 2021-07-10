@@ -21,7 +21,8 @@ source("ui.R")
 
 server <- function(input, output, session) {
     #current <- reactiveValues(file = c(""), dataset = data.frame(), clusters = c(), count=0)
-    login = FALSE
+  # Change this variable if you plan to publish it to false
+    login = TRUE
     USER <- reactiveValues(login = login)
     
     
