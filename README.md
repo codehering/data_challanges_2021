@@ -4,7 +4,7 @@ Der Quellcode ist unter https://github.com/codehering/data_challenges_2021 frei 
 ## Technische Umsetzung
 Für die technische Umsetzung des Projektes wurden die Programmiersprache Python und die statistische Skriptsprache R verwendet. Dabei wurde vor allem im ersten Schritt für die jeweiligen Experimente und explorativen Analysen Python mit der Erweiterung Jupyter Notebook verwendet. Für das interaktive Dashboard wurde wiederum das sehr einfach gehaltene High-level Framework Shiny verwendet. 
 ## Daten
-Für den Zugriff auf die CN Daten muss der Link aus download_link_for_CN_data.txt (nicht auf github) geöffnet und die csv. Daten heruntergeladen werden. Zur Ausführung der Skripte muss entsprechend der Pfad angepasst werden. 
+Für den Zugriff auf die CN Daten muss der Link aus download_link_for_CN_data.txt (nicht auf github) geöffnet und die csv Daten heruntergeladen werden. Zur Ausführung der Skripte muss entsprechend der Pfad angepasst werden. 
 
 ## Verzeichnisstruktur:
 
@@ -19,7 +19,10 @@ Unter Frontend sind nur Skripte, die für das das Dashboard selbst benötigt wer
 
 Unter Backend sind alle Skripte, die notwendig sind, um die Daten in ein für das Dashboard geeignetes Format zu bringen (rds format) (ETL.R). Des Weiteren liegt in diesem Verzeichnis rf_classifer.R. Dieses Skript trainiert die RandomForest Modelle, die für den Coin Finder des Dashboards notwendig sind, um ähnliche Münzen anhand bestimmter Kriterien finden zu können.
 ### data_prep:
-Unter data_prep finden sich alle Skripte, die für die Aufbereitung der Daten notwendig waren. Dabei existieren entitätsspezifische Skripte, wie auch Skripte, die sich mit der Aufbereitung des RDF-Datensatzes beschäftigen. Das Skript data_preperation_for_analysis.py bereitet die über eine SPARQL-Query gezogenen Daten für die weiteren Analyseschritte auf. Das Skript dimension_reduction.py beinhaltet die kompletten Schritte für die UMAP Dimensionsreduzierung. In der Datei timperiods_clustering.py ist die gesamte Logik der Clusteringverfahren gespeichert.
+Unter data_prep finden sich alle Skripte, die für die Aufbereitung der Daten notwendig waren. Dabei existieren entitätsspezifische Skripte, wie auch Skripte, die sich mit der Aufbereitung des RDF-Datensatzes beschäftigen. 
+- data_preperation_for_analysis.py: Das Skript bereitet die über eine SPARQL-Query gezogenen Daten für die weiteren Analyseschritte auf. 
+- dimension_reduction.py: Das Skript beinhaltet die kompletten Schritte für die UMAP Dimensionsreduzierung. 
+- timperiods_clustering.py: In der Datei ist die gesamte Logik der Clusteringverfahren gespeichert.
 ### experiments:
 In dem Verzeichnis experiments liegen alle Skripte, welche uns geholfen haben entweder die Daten an sich oder verschiedene datengetriebene Methoden zu verstehen. Wichtig ist, dass nicht alle Ideen und Methoden, die in diesem Verzeichnis angewandt wurden, auch später weiter verfolgt und ausgebaut wurden. Insofern kann dieses Verzeichnis als Sammelstelle aller für das Projekt essenziell wichtigen Teile betrachtet werden, auch wenn vieles keinen direkten Einfluss auf die Ergebnisse unseres Projektes hatte. Wir unterscheiden dabei zwischen vanilla Python und jupyter notebook Experimenten. Letztere sind deutlich besser aufbereitet und können dadurch auch leichter verstanden werden. Besonders interessant sind dabei die Notebooks Dimesion_reduction_analysis.ipynb (geht auf die verschiedenen Dimensionsreduzierungsalgorithmen ein und vergleicht diese), different_timeperiods_umap_analysis.ipynb (ein erster Versuch die verschiedenen kMeans-Cluster nach der UMAP-Transformation zu interpretieren) und predict_coin_data_with_entitys_experiments.ipynb (Vorhersage von Münzdaten, wie z.B. enddate nur mit Hilfe der Entitäten).
 ### plots:
