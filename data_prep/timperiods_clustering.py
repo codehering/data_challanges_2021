@@ -16,6 +16,7 @@ from sklearn.cluster import KMeans
 directory = "../timeperiod/new/"
 data_files = ["data_400bc.csv", "data_200bc.csv", "data_0bc.csv", "data_0ad.csv", "data_200ad.csv"]
 
+# elbow analysis for kmeans clustering
 for file in data_files:
     tmp_data = pd.read_csv(f"{directory+file}")
     tmp_data = tmp_data[["x", "y"]]
@@ -30,7 +31,8 @@ for file in data_files:
     plt.ylabel('Sum_of_squared_distances')
     plt.title(f'{file} - Elbow Method For Optimal k')
     plt.show()
-    
+
+# optimal k values
 k_values = [4,4, 4, 4, 5]
 i = 0
 k_labels = list()
@@ -41,7 +43,8 @@ for file in data_files:
     i += 1
     km = km.fit(tmp_data)
     k_labels.append(km.labels_)
-    
+
+#dbscan clustering analysis
 dbscan_labels = list()
 for file in data_files:
     # do dbscan analysis
@@ -90,6 +93,7 @@ for file in data_files:
 #4: 12
 #5: 16
 counter = 0
+#optimal number of classes for hierarchical clustering
 clusters = [8, 8, 6, 3, 6]
 hierarchy_labels = list()
 for file in data_files:
@@ -98,6 +102,7 @@ for file in data_files:
     hierarchy_labels.append(model.labels_)
     counter +=1
 c = 0
+# output
 for file in data_files:
     data = pd.read_csv(f"{directory+file}")
     data["kmeans_label"] = k_labels[c]
