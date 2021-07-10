@@ -3,6 +3,8 @@ Dieses Repository beinhaltet alle Skripte und Experimente, die im Rahmen der Vor
 Der Quellcode ist unter https://github.com/codehering/data_challanges_2021 frei verfügbar. 
 ## Technische Umsetzung
 Für die technische Umsetzung des Projektes wurden die Programmiersprache Python und die statistische Skriptsprache R verwendet. Dabei wurde vor allem im ersten Schritt für die jeweiligen Experimente und explorativen Analysen Python mit der Erweiterung Jupyter Notebook verwendet. Für das interaktive Dashboard wurde wiederum das sehr einfach gehaltene High-level Framework Shiny verwendet. 
+## Daten
+Für den Zugriff der CN Daten muss der Link aus download_link_for_CN_data.txt (nicht auf github) geöffnet und die csv. Daten heruntergeladen werden. Zur Ausführung der Skripte muss entsprechend der Pfad angepasst werden. 
 
 ## Verzeichnisstruktur:
 
@@ -34,7 +36,7 @@ Der Coin Finder bietet die Möglichkeit Werte einer Münze für einen gegebenen 
 ## Zugriff auf das Dashboard
 Das Dashboard ist momentan unter https://cnminerva.shinyapps.io/coin/ verfügbar. Die jeweiligen Credentials wurden per Mail versendet oder sind in der Abgabe unter dashboard/frontend/credentials.R zu finden.
 Die Performance des gehosteten Dashboards ist jedoch deutlich schlechter, als bei einer lokalen Ausführung. Insbesondere der Entity Explorer läd sehr lange, da über 150.000 Datenpunkte geladen werden müssen. Des Weiteren sollte bei der Nutzung darauf geachtet werden, dass der Ladevorgang der Tabellen und Plots abgeschlossen ist, bevor weitere Veränderungen vorgenommen werden. 
-Insofern empfehlen wir das Dashboard lokal zu starten. Um alle notwendigen Packages zu installieren, muss das Skript dashboard/install_all_packages.R ausgeführt werden. Im nächsten Schritt muss die Datei dashboard/frontend/app.R ausgeführt werden. Wichtig: Die notwendigen Daten müssen noch in das Verzeichnis dashboard/frontend/cnn kopiert werden. Um an die Daten zu gelangen, muss der Link aus download_link_for_dashboard_data.txt (nicht auf github) geöffnet und alle Daten heruntergladen werden. 
+Insofern empfehlen wir das Dashboard lokal zu starten. Um alle notwendigen Packages zu installieren, muss das Skript dashboard/install_all_packages.R ausgeführt werden. Im nächsten Schritt muss die Datei dashboard/frontend/app.R ausgeführt werden. Wichtig: Die notwendigen Daten müssen noch in das Verzeichnis dashboard/frontend/cnn kopiert werden. Um an die Daten zu gelangen, muss der Link aus download_link_for_dashboard_data.txt (nicht auf github) geöffnet und alle Daten heruntergeladen werden. 
 
 
 
