@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Jul  2 18:58:24 2021
-
-@author: fredi
+This file contains the clustering algortihms kmeans, dbscan and hierarchical clustering. Input from https://github.com/codehering/data_challanges_2021/blob/main/data_prep/dimension_reduction.py.
+The resutls are stored in csv format and used by the dasboard for further analysis.
+@author: freddy, annalena
 """
 
 import pandas as pd
